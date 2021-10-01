@@ -7,5 +7,5 @@ export default makeStyles({
     },
     headContainer: {
         textAlign: 'center',
-    }
+    },
 })

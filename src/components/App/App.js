@@ -5,7 +5,6 @@ import Header from '../Header/Header'
 import { Button, ButtonGroup, FormGroup, TextField } from '@material-ui/core';
 import useStyles from './style';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Navbar } from 'react-bootstrap';
 
 export default function App() {
 
@@ -20,7 +19,7 @@ export default function App() {
 
     const getSource = async () => {
         await axios
-        .get(`/${head}?q=${query}&sources=${source}&apiKey=${API_KEY}`)
+        .get(`/${head}?q=${query}&language=en&sources=${source}&apiKey=${API_KEY}`)
         .then((response) => {
             setPage(response.data.articles)
             console.log(response.data.articles)
@@ -45,21 +44,31 @@ export default function App() {
     return (
         <div>
             <Header />
+
+
             <form onSubmit={(e) => handleSubmit(e)}>
                 <FormGroup >
                     <TextField id="outlined-basic" label="Search Topic" variant="filled" onChange={(e) => setQuery(e.target.value)} ></TextField>
                     <Button variant="contained" color="primary" onClick={(e) => handleSubmit(e)}>Submit</Button><br/>
                 </FormGroup>
             </form>
+
+
             <form className={classes.headContainer} onSubmit={(e) => handleSubmit(e)}>
                 <ButtonGroup variant="contained" aria-label="outlined secondary button group">
                     <Button color="secondary" type='submit' onClick={() => setHead('everything')}>Everything</Button>
                     <Button color="primary" type='submit' onClick={() => setHead('top-headlines')}>Top-Headlines</Button>
                 </ButtonGroup>
             </form>
+
+
             <form className={classes.mainContainer} onSubmit={(e) => handleSubmit(e)}>
                 <ButtonGroup variant="contained" aria-label="outlined secondary button group">
-                    <Button color="primary" type='submit' onClick={() => setSource('techcrunch')}>Techcrunch</Button>
+                    <Button color="primary" type='submit' onClick={() => setSource('ign')}>IGN</Button>
+                    <Button color="secondary" type='submit' onClick={() => setSource('techradar')}>TechRadar</Button>
+                    <Button color="primary" type='submit' onClick={() => setSource('engadget')}>Engadget</Button>
+                    <Button color="secondary" type='submit' onClick={() => setSource('usa-today')}>USA Today</Button>
+                    <Button color="primary" type='submit' onClick={() => setSource('cbs-news')}>CBS news</Button>
                     <Button color="secondary" type='submit' onClick={() => setSource('bloomberg')}>Bloomberg</Button>
                     <Button color="primary" type='submit' onClick={() => setSource('abc-news')}>ABC News</Button>
                     <Button color="secondary" type='submit' onClick={() => setSource('cnn')}>CNN</Button>
@@ -67,7 +76,9 @@ export default function App() {
                     <Button color="secondary" type='submit' onClick={() => setSource('fox-news')}>FOX News</Button>
                 </ButtonGroup>
             </form>
+
             <Newscards news={page}/>
+
         </div>
     )
 }
